@@ -1,12 +1,13 @@
 # Welcome
 
-Welcome to my Advent of Code stream's
+Welcome to my Advent of Code Stream
 
 ## Table of content
 - Rules
 - Schedule
-- My Advent of Code 2023 Goals
+- Streaming goal
 - My set-up
+- My Advent of Code 2023 Goals
 
 Richard :)
 
@@ -19,13 +20,13 @@ Richard :)
 ---
 # Schedule
 
-For the month of december:
+For the month of December:
 - Sunday from 10:00
 - Tuesday from 18:00
 - Wednesday from 18:00
 
-Starting on sunday 3 december
-Ending on ... we will see either 24 december of later if we want to do more of them.
+Starting on sunday 3 December
+Ending on ... we will see either 24 December or later if we want to do more of them.
 
 
 ---
