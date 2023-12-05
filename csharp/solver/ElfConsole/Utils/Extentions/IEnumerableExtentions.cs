@@ -44,11 +44,16 @@ public static class IEnumerableExtentions
 
 		yield return list;
 	}
+	public static int Product(this IEnumerable<int> enumerable)
+	{
+		return enumerable.Aggregate(1, (mult, value) => mult * value);
+	}
 
 	public static int Product<T>(this IEnumerable<T> enumerable, Func<T, int> func)
 	{
 		return enumerable.Aggregate(1, (mult, value) => mult * func(value));
 	}
+	
 	public static long Product<T>(this IEnumerable<T> enumerable, Func<T, long> func)
 	{
 		return enumerable.Aggregate(1L, (mult, value) => mult * func(value));
