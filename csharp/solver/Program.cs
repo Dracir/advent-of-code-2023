@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 Console.WriteLine("Hello, World!");
 
 
@@ -34,19 +36,79 @@ Console.WriteLine("Hello, World!");
 // Console.WriteLine($"Day2 Part2: {day2Answer}");
 
 
-var day3example1 = @"467..114..
-...*......
-..35..633.
-......#...
-617*......
-.....+.58.
-..592.....
-......755.
-...$.*....
-.664.598..";
+// var day3example1 = @"467..114..
+// ...*......
+// ..35..633.
+// ......#...
+// 617*......
+// .....+.58.
+// ..592.....
+// ......755.
+// ...$.*....
+// .664.598..";
 
-// var day3answer = Day3.Part1(day3example1);
-// var day3answer = Day3.Part1(File.ReadAllText("inputs/day3.txt"));
-// var day3answer = Day3.Part2(day3example1);
-var day3answer = Day3.Part2(File.ReadAllText("inputs/day3.txt"));
-Console.WriteLine($"Day3 Part1: {day3answer}");
+// // var day3answer = Day3.Part1(day3example1);
+// // var day3answer = Day3.Part1(File.ReadAllText("inputs/day3.txt"));
+// // var day3answer = Day3.Part2(day3example1);
+// var day3answer = Day3.Part2(File.ReadAllText("inputs/day3.txt"));
+// Console.WriteLine($"Day3 Part1: {day3answer}");
+
+
+// var day4Example1 = @"Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
+// Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
+// Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
+// Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
+// Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
+// Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11";
+
+
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+
+// // var day4Answer = Day4.Part2(day4Example1);
+// var day4Answer = Day4.Part2(File.ReadAllText("inputs/day4.txt"));
+// stopwatch.Stop();
+// Console.WriteLine($"Day4 Part2: {day4Answer} in {stopwatch.ElapsedMilliseconds}ms");
+// // var day4Answer = Day4.Part1(File.ReadAllText("inputs/day4.txt"));
+
+
+var day5Example1 = @"seeds: 79 14 55 13
+
+seed-to-soil map:
+50 98 2
+52 50 48
+
+soil-to-fertilizer map:
+0 15 37
+37 52 2
+39 0 15
+
+fertilizer-to-water map:
+49 53 8
+0 11 42
+42 0 7
+57 7 4
+
+water-to-light map:
+88 18 7
+18 25 70
+
+light-to-temperature map:
+45 77 23
+81 45 19
+68 64 13
+
+temperature-to-humidity map:
+0 69 1
+1 0 69
+
+humidity-to-location map:
+60 56 37
+56 93 4";
+var stopwatch = new Stopwatch();
+stopwatch.Start();
+// var day5answer = Day5.Part2(day5Example1);
+var day5answer = Day5.Part2(File.ReadAllText("inputs/day5.txt"));
+
+stopwatch.Stop();
+Console.WriteLine($"Day5 Part2: {day5answer} in {stopwatch.ElapsedMilliseconds}ms");
