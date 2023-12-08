@@ -37,12 +37,11 @@ public static class Day5
 	public static ulong Part2(string input)
 	{
 		var almanac = Parse(input);
-		var lowestSeedLocation = ulong.MaxValue;
 
-		for (int i = 0; i < almanac.Seeds.Length; i += 2)
-			lowestSeedLocation = Math.Min(lowestSeedLocation, AToZ(ref almanac, almanac.Seeds[i], almanac.Seeds[i + 1], 0));
-
-		return lowestSeedLocation;
+		return almanac.Seeds
+			.Chunk(2)
+			.Select(x => AToZ(ref almanac, almanac.Seeds[x[0]], almanac.Seeds[x[1]], 0))
+			.Min();
 	}
 
 	public static ulong AToZ(ref Almanac almanac, ulong startValue, ulong valueRange, int mapIndex)

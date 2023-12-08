@@ -53,7 +53,7 @@ public static class IEnumerableExtentions
 	{
 		return enumerable.Aggregate(1, (mult, value) => mult * func(value));
 	}
-	
+
 	public static long Product<T>(this IEnumerable<T> enumerable, Func<T, long> func)
 	{
 		return enumerable.Aggregate(1L, (mult, value) => mult * func(value));
@@ -87,13 +87,15 @@ public static class IEnumerableExtentions
 
 	public static string JoinStr<T>(this IEnumerable<T> enumeration, Func<T, string> selector, char separator)
 	{
-		return enumeration.Aggregate("", (agg, x) => (agg.Count() == 0) ? selector(x) : (agg + "|" + selector(x)));
-
+		return enumeration.Aggregate("", (agg, x) => string.IsNullOrEmpty(agg) ? selector(x) : (agg + separator + selector(x)));
 	}
 	public static string JoinStr(this IEnumerable<string> enumeration, char separator)
 	{
-		return enumeration.Aggregate("", (agg, x) => (agg.Count() == 0) ? x : (agg + "|" + x));
-
+		return enumeration.Aggregate("", (agg, x) => string.IsNullOrEmpty(agg) ? x : (agg + separator + x));
+	}
+	public static string JoinStr(this IEnumerable<string> enumeration)
+	{
+		return enumeration.Aggregate("", (agg, x) => string.IsNullOrEmpty(agg) ? x : agg + x);
 	}
 
 	public static IEnumerable<T> Flatten<T>(this IEnumerable<T> e, Func<T, IEnumerable<T>> selector)
