@@ -18,14 +18,14 @@ public static class InputParser
 		else
 			return ListOfInts(input, ',');
 	}
-	public static long[] ListOfLong(string input)
-	{
-		input = input.Replace("\r", "");
-		if (input.Contains("\n"))
-			return ListOfLong(input, '\n');
-		else
-			return ListOfLong(input, ',');
-	}
+	// public static long[] ListOfLong(string input)
+	// {
+	// 	input = input.Replace("\r", "");
+	// 	if (input.Contains("\n"))
+	// 		return ListOfLong(input, '\n');
+	// 	else
+	// 		return ListOfLong(input, ',');
+	// }
 
 	public static string[] ListOfStrings(string input)
 	{
@@ -39,7 +39,6 @@ public static class InputParser
 	public static int[] ListOfDigitNoSeparator(string input) => input.Select(x => int.Parse(x.ToString())).ToArray();
 	public static int[] ListOfInts(string input, char separator) => input.Split(separator).Select(x => int.Parse(x)).ToArray();
 
-	public static long[] ListOfLong(string input, char separator) => input.Split(separator).Select(x => long.Parse(x)).ToArray();
 
 	/* a range in the format of "number-number" for exemple 130254-678275*/
 	public static RangeInt ParseRangeInt(string input)

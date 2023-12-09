@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+namespace AocUtils;
+
 public class SevenSegmentDisplayRenderer
 {
 	private readonly int _x;

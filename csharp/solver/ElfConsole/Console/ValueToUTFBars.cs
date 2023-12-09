@@ -1,6 +1,8 @@
 
 
 
+namespace AocUtils;
+
 public static class ValueToUTFBars
 {
 	public enum Styles { Horizontal, Vertical, Shades, Circle, CenteredVerticalBar }

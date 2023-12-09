@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+namespace AocUtils;
+
 
 public class HexPreview<T>
 {

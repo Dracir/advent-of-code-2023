@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+namespace AocUtils;
+
 public static class PointHelper
 {
 	public static readonly Point2Int[] _8DirectionPoints = new Point2Int[]{

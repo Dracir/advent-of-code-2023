@@ -1,3 +1,5 @@
+namespace AocUtils;
+
 using System.Text;
 using static UnicodeCharacter;
 using Console = ElfConsole;

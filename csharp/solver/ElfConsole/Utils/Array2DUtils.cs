@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+namespace AocUtils;
+
 public static class Array2DUtils
 {
 	public static IEnumerable<Point2Int> Range2D(int length0, int length1)

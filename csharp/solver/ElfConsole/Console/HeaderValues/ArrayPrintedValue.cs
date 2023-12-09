@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+namespace AocUtils;
+
 public class ArrayPrintedValue
 {
 	private readonly Point2Int _position;

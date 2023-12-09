@@ -1,3 +1,4 @@
+namespace AocUtils;
 
 using System;
 using System.Collections;
@@ -42,9 +43,6 @@ public class HexMap<T> : MultiDimentionalArray<T>
 
 	public int Width => Size[0];
 	public int Height => Size[1];
-
-
-
 
 }
 

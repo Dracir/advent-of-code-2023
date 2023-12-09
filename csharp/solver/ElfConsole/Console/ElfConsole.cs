@@ -1,6 +1,8 @@
 
 using System;
 
+namespace AocUtils;
+
 public static class ElfConsole
 {
 	public static int Width { get { return Console.WindowWidth; } }

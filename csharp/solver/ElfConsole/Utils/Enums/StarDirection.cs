@@ -1,4 +1,7 @@
 
+
+namespace AocUtils;
+
 public enum StarDirection { North, Est, South, West, NorthWest, NorthEast, SouthWest, SouthEast }
 
 public static class StarDirectionExtentions

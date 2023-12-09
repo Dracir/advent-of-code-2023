@@ -1,3 +1,7 @@
+
+
+namespace AocUtils;
+
 public static class UnicodeCharacter
 {
 	public static char BOX_CORNER_TOP_RIGHT = '┐';

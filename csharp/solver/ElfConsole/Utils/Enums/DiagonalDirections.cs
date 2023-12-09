@@ -1,4 +1,7 @@
 
+
+namespace AocUtils;
+
 public enum DiagonalDirection { NorthWest = 0, NorthEast = 1, SouthWest = 2, SouthEast = 3 }
 
 public static class DiagonalDirectionExtentions

@@ -1,3 +1,5 @@
+using AocUtils;
+
 public static class Day5
 {
 	public static ulong Part1(string input)
@@ -16,19 +18,17 @@ public static class Day5
 			var location = AToB(almanac.HumidityToLocationMap, humidity);
 
 			lowestSeedLocation = Math.Min(lowestSeedLocation, location);
-
-			// Console.WriteLine($"Seed: {seed} -> Soil: {soil} -> Fertilizer: {fertilizer} -> Water: {water} -> Light: {light} -> Temperature: {temperature} -> Humidity: {humidity} -> Location: {location}");
 		}
 
 		return lowestSeedLocation;
 	}
 
-	public static ulong AToB(List<(ulong AStart, ulong BStart, ulong Range)> map, ulong a)
+	public static ulong AToB(List<(RangeUlong FromRange, ulong To)> map, ulong a)
 	{
-		foreach (var (AStart, BStart, Range) in map)
+		foreach ((RangeUlong fromRange, ulong to) in map)
 		{
-			if (a >= AStart && a < AStart + Range)
-				return BStart + (a - AStart);
+			if (fromRange.Contains(a))
+				return to + a - fromRange.Min;
 		}
 
 		return a;
@@ -40,7 +40,7 @@ public static class Day5
 
 		return almanac.Seeds
 			.Chunk(2)
-			.Select(x => AToZ(ref almanac, almanac.Seeds[x[0]], almanac.Seeds[x[1]], 0))
+			.Select(x => AToZ(ref almanac, x[0], x[1], 0))
 			.Min();
 	}
 
@@ -55,10 +55,13 @@ public static class Day5
 		while (value < startValue + valueRange)
 		{
 			var (b, bRemainingAfter) = AToBWithRange(map, value);
-			var currentRemeaning = startValue + valueRange - value - 1;
-			var realRemainingRange = 1 + Math.Min(bRemainingAfter, currentRemeaning);
+			var currentRemeaning = startValue + valueRange - value - 1ul;
+			var realRemainingRange = Math.Min(bRemainingAfter, currentRemeaning);
 
 			// Console.WriteLine($"{tab}AtoZ: startValue:{startValue} Range:{valueRange} Index:{mapIndex} - value: {value} b: {b}, bRemainingRange:{bRemainingAfter}, currentRemeaning:{currentRemeaning} => realRemainingRange: {realRemainingRange}");
+
+			if (realRemainingRange == 0)
+				realRemainingRange = 1;
 
 			value += realRemainingRange;
 
@@ -71,23 +74,23 @@ public static class Day5
 		return lowestSeedLocation;
 	}
 
-	public static (ulong Start, ulong RemainingAfter) AToBWithRange(List<(ulong AStart, ulong BStart, ulong Range)> map, ulong a)
+	public static (ulong Start, ulong RemainingAfter) AToBWithRange(List<(RangeUlong FromRange, ulong To)> map, ulong a)
 	{
-		var minAfterA = ulong.MaxValue;
-		foreach (var (AStart, BStart, Range) in map)
+		var firstRangeStartAfterA = ulong.MaxValue;
+		foreach ((RangeUlong fromRange, ulong to) in map)
 		{
-			if (AStart > a && AStart < minAfterA)
-				minAfterA = AStart;
+			if (fromRange.Min > a && fromRange.Min < firstRangeStartAfterA)
+				firstRangeStartAfterA = fromRange.Min;
 
-			if (a >= AStart && a < AStart + Range)
+			if (fromRange.Contains(a))
 			{
-				var xLocation = a - AStart;
-				var remaining = Range - xLocation - 1;
-				return (BStart + xLocation, remaining);
+				var xLocation = a - fromRange.Min;
+				var remaining = fromRange.MaxExclusive - a;
+				return (to + xLocation, remaining);
 			}
 		}
 
-		return (a, minAfterA - a - 1);
+		return (a, firstRangeStartAfterA - a);
 	}
 
 
@@ -95,42 +98,40 @@ public static class Day5
 	{
 		var groups = input.Split("\n\n");
 
-		var seeds = groups[0].Split(": ")[1].Split(" ").Select(ulong.Parse).ToArray();
-
-		var seedToSoilMap = groups[1].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var soilToFertilizerMap = groups[2].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var fertilizerToWaterMap = groups[3].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var waterToLightMap = groups[4].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var lightToTemperatureMap = groups[5].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var temperatureToHumidityMap = groups[6].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-		var humidityToLocationMap = groups[7].Split("\n").Skip(1).Select(x => x.Split(" ").Select(ulong.Parse).ToArray()).Select(x => (x[1], x[0], x[2])).ToList();
-
 		return new Almanac
 		{
-			Seeds = seeds,
-			SeedToSoilMap = seedToSoilMap,
-			SoilToFertilizerMap = soilToFertilizerMap,
-			FertilizerToWaterMap = fertilizerToWaterMap,
-			WaterToLightMap = waterToLightMap,
-			LightToTemperatureMap = lightToTemperatureMap,
-			TemperatureToHumidityMap = temperatureToHumidityMap,
-			HumidityToLocationMap = humidityToLocationMap
+			Seeds = groups[0].Split(": ")[1].ParseListOfUlong(),
+			SeedToSoilMap = ParseMap(groups[1]),
+			SoilToFertilizerMap = ParseMap(groups[2]),
+			FertilizerToWaterMap = ParseMap(groups[3]),
+			WaterToLightMap = ParseMap(groups[4]),
+			LightToTemperatureMap = ParseMap(groups[5]),
+			TemperatureToHumidityMap = ParseMap(groups[6]),
+			HumidityToLocationMap = ParseMap(groups[7]),
 		};
+	}
+
+	private static List<(RangeUlong, ulong)> ParseMap(string group)
+	{
+		return group.Split("\n").Skip(1)
+		.Select(x => x.ParseListOfUlong()).Select(x => (new RangeUlong(x[1], x[1] + x[2]), x[0]))
+		.ToList();
 	}
 
 	public struct Almanac
 	{
 		public ulong[] Seeds;
 
-		public List<(ulong SeedStart, ulong SoilStart, ulong Range)> SeedToSoilMap;
-		public List<(ulong SoilStart, ulong FertilizerStart, ulong Range)> SoilToFertilizerMap;
-		public List<(ulong FertilizerStart, ulong WaterStart, ulong Range)> FertilizerToWaterMap;
-		public List<(ulong WaterStart, ulong LightStart, ulong Range)> WaterToLightMap;
-		public List<(ulong LightStart, ulong TemperatureStart, ulong Range)> LightToTemperatureMap;
-		public List<(ulong TemperatureStart, ulong HumidityStart, ulong Range)> TemperatureToHumidityMap;
-		public List<(ulong HumidityStart, ulong LocationStart, ulong Range)> HumidityToLocationMap;
+		public List<(RangeUlong FromRange, ulong To)> SeedToSoilMap;
+		public List<(RangeUlong FromRange, ulong To)> SoilToFertilizerMap;
+		public List<(RangeUlong FromRange, ulong To)> FertilizerToWaterMap;
+		public List<(RangeUlong FromRange, ulong To)> WaterToLightMap;
+		public List<(RangeUlong FromRange, ulong To)> LightToTemperatureMap;
+		public List<(RangeUlong FromRange, ulong To)> TemperatureToHumidityMap;
+		public List<(RangeUlong FromRange, ulong To)> HumidityToLocationMap;
 
-		public List<(ulong AStart, ulong BStart, ulong Range)> MapAtIndex(int index) => index switch
+
+		public readonly List<(RangeUlong FromRange, ulong To)> MapAtIndex(int index) => index switch
 		{
 			0 => SeedToSoilMap,
 			1 => SoilToFertilizerMap,
