@@ -1,3 +1,6 @@
+namespace AocUtils;
+
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,9 +120,9 @@ public static class InputParser
 
 	/*----------Line------------*/
 	// 0,9 -> 5,9 : ListOfLines(str, '\n', ',' ," -> ")
-	public static List<Line> ListOfLines(string str, char lineSeparator, char xySeperator, string pointsSeparator)
+	public static List<Line2DInt> ListOfLines(string str, char lineSeparator, char xySeperator, string pointsSeparator)
 	{
-		var lines = new List<Line>();
+		var lines = new List<Line2DInt>();
 
 		var strLines = str.Split(lineSeparator);
 		foreach (var line in strLines)
@@ -127,20 +130,20 @@ public static class InputParser
 			var pts = line.Split(pointsSeparator);
 			var a = APoint(pts[0], xySeperator);
 			var b = APoint(pts[1], xySeperator);
-			lines.Add(new Line(a, b));
+			lines.Add(new Line2DInt(a, b));
 		}
 		return lines;
 	}
 
-	public static Point APoint(string str, char xySeperator)
+	public static Point2Int APoint(string str, char xySeperator)
 	{
 		var splited = str.Split(xySeperator);
-		return new Point(int.Parse(splited[0]), int.Parse(splited[1]));
+		return new Point2Int(int.Parse(splited[0]), int.Parse(splited[1]));
 	}
 
 
 
-	public static List<Point> ListOfPoints(string str, char lineSeparator, char xySeperator)
+	public static List<Point2Int> ListOfPoints(string str, char lineSeparator, char xySeperator)
 	{
 		return str.Split(lineSeparator)
 		.Select(x => APoint(x, xySeperator))

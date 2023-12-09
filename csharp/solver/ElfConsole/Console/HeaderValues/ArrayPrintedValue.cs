@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class ArrayPrintedValue
 {
-	private readonly Point _position;
+	private readonly Point2Int _position;
 	private int _width;
 	private FormatedPrintedValue[] _printedValues;
 
-	public ArrayPrintedValue(Point position, int cellWidth, int nbCells, int cellSpacing, ConsoleColor color, string? format = null)
+	public ArrayPrintedValue(Point2Int position, int cellWidth, int nbCells, int cellSpacing, ConsoleColor color, string? format = null)
 	{
 		_width = cellWidth;
 		_printedValues = new FormatedPrintedValue[nbCells];
 		for (int i = 0; i < nbCells; i++)
-			_printedValues[i] = new FormatedPrintedValue(position + new Point(i * (cellWidth + cellSpacing), 0), cellWidth, color, format);
+			_printedValues[i] = new FormatedPrintedValue(position + new Point2Int(i * (cellWidth + cellSpacing), 0), cellWidth, color, format);
 	}
 
 	public void SetColor(int i, ConsoleColor color)

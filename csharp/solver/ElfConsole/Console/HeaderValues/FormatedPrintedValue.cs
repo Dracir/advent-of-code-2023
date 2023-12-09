@@ -12,13 +12,13 @@ public class FormatedPrintedValue
 	}
 
 
-	private readonly Point _position;
+	private readonly Point2Int _position;
 	private int _width;
 	private string? Format;
 
 	private string? _currentValue;
 
-	public FormatedPrintedValue(Point position, int width, ConsoleColor color, string? format = null)
+	public FormatedPrintedValue(Point2Int position, int width, ConsoleColor color, string? format = null)
 	{
 		this._position = position;
 		_width = width;

@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+
+namespace AocUtils;
 
 public class Grid<T> : IGrid<T>
 {
-	private T[,] Values;
+	private T[,] _values;
 
 	private int _offsetX;
 	private int _offsetY;
@@ -29,8 +27,8 @@ public class Grid<T> : IGrid<T>
 	public int MaxX => -OffsetX + FullWidth - 1;
 	public int MaxY => -OffsetY + FullHeight - 1;
 
-	public int FullWidth => Values.GetLength(0);
-	public int FullHeight => Values.GetLength(1);
+	public int FullWidth => _values.GetLength(0);
+	public int FullHeight => _values.GetLength(1);
 	public int UsedWidth => usedMaxX - usedMinX + 1;
 	public int UsedHeight => usedMaxY - usedMinY + 1;
 
@@ -48,13 +46,13 @@ public class Grid<T> : IGrid<T>
 		usedMaxX = _offsetX;
 		usedMinY = _offsetY;
 		usedMaxY = _offsetY;
-		Values = new T[xRange.Max - xRange.Min + 1, yRange.Max - yRange.Min + 1];
+		_values = new T[xRange.Max - xRange.Min + 1, yRange.Max - yRange.Min + 1];
 		foreach (var item in PointsAndValues())
 			this[item.Point] = defaultValue;
 	}
 
 
-	public virtual T this[Point key]
+	public virtual T this[Point2Int key]
 	{
 		get { return this[key.X, key.Y]; }
 		set { this[key.X, key.Y] = value; }
@@ -62,10 +60,10 @@ public class Grid<T> : IGrid<T>
 
 	public virtual T this[int x, int y]
 	{
-		get { return Values[x + _offsetX, y + _offsetY]; }
+		get { return _values[x + _offsetX, y + _offsetY]; }
 		set
 		{
-			Values[x + _offsetX, y + _offsetY] = value;
+			_values[x + _offsetX, y + _offsetY] = value;
 			usedMinX = Math.Min(usedMinX, x);
 			usedMinY = Math.Min(usedMinY, y);
 			usedMaxX = Math.Max(usedMaxX, x);
@@ -74,27 +72,27 @@ public class Grid<T> : IGrid<T>
 	}
 
 
-	public Point TopLeft => new Point(usedMinX, usedMaxY);
-	public Point TopRight => new Point(usedMaxX, usedMaxY);
-	public Point BottomLeft => new Point(usedMinX, usedMinY);
-	public Point BottomRight => new Point(usedMaxX, usedMinY);
-	public Point Center => new Point(_offsetX, _offsetY);
+	public Point2Int TopLeft => new(usedMinX, usedMaxY);
+	public Point2Int TopRight => new(usedMaxX, usedMaxY);
+	public Point2Int BottomLeft => new(usedMinX, usedMinY);
+	public Point2Int BottomRight => new(usedMaxX, usedMinY);
+	public Point2Int Center => new(_offsetX, _offsetY);
 
-	public IEnumerable<Point> Points()
+	public IEnumerable<Point2Int> Points()
 	{
 		for (int x = usedMinX; x <= usedMaxX; x++)
 			for (int y = usedMinY; y <= usedMaxY; y++)
-				yield return new Point(x, y);
+				yield return new Point2Int(x, y);
 	}
-	public IEnumerable<(Point Point, T Value)> PointsAndValues()
+	public IEnumerable<(Point2Int Point, T Value)> PointsAndValues()
 	{
 		for (int x = usedMinX; x <= usedMaxX; x++)
 			for (int y = usedMinY; y <= usedMaxY; y++)
-				yield return (new Point(x, y), this[x, y]);
+				yield return (new Point2Int(x, y), this[x, y]);
 	}
 
 
-	public IEnumerable<Point> AreaSquareAround(Point pt, int radiusDistance)
+	public IEnumerable<Point2Int> AreaSquareAround(Point2Int pt, int radiusDistance)
 	{
 
 		int x1 = Math.Max(usedMinX, pt.X - radiusDistance);
@@ -104,11 +102,11 @@ public class Grid<T> : IGrid<T>
 
 		for (int x = x1; x <= x2; x++)
 			for (int y = y1; y <= y2; y++)
-				yield return new Point(x, y);
+				yield return new Point2Int(x, y);
 	}
 
 
-	public IEnumerable<(Point Point, T Value)> PointAndValuesSquareAround(Point pt, int radiusDistance)
+	public IEnumerable<(Point2Int Point, T Value)> PointAndValuesSquareAround(Point2Int pt, int radiusDistance)
 	{
 
 		int x1 = Math.Max(usedMinX, pt.X - radiusDistance);
@@ -118,11 +116,11 @@ public class Grid<T> : IGrid<T>
 
 		for (int x = x1; x <= x2; x++)
 			for (int y = y1; y <= y2; y++)
-				yield return (new Point(x, y), this[x, y]);
+				yield return (new Point2Int(x, y), this[x, y]);
 	}
 
 
-	public IEnumerable<(Point Point, T Value)> PointAndValuesInDirection(Point pt, int dx, int dy, bool includeStartingPoint)
+	public IEnumerable<(Point2Int Point, T Value)> PointAndValuesInDirection(Point2Int pt, int dx, int dy, bool includeStartingPoint)
 	{
 		var x = pt.X;
 		var y = pt.Y;
@@ -134,13 +132,13 @@ public class Grid<T> : IGrid<T>
 
 		while (x >= usedMinX && x <= usedMaxX && y >= usedMinY && y <= usedMaxY)
 		{
-			yield return (new Point(x, y), this[x, y]);
+			yield return (new Point2Int(x, y), this[x, y]);
 			x += dx;
 			y += dy;
 		}
 	}
 
-	public IEnumerable<Point> AreaAround(Point pt, int manhattanDistance)
+	public IEnumerable<Point2Int> AreaAround(Point2Int pt, int manhattanDistance)
 	{
 		int x1 = Math.Max(usedMinX, pt.X - manhattanDistance);
 		int y1 = Math.Max(usedMinY, pt.Y - manhattanDistance);
@@ -152,7 +150,7 @@ public class Grid<T> : IGrid<T>
 			{
 				var distance = Math.Abs(pt.X - x) + Math.Abs(pt.Y - y);
 				if (distance <= manhattanDistance)
-					yield return new Point(x, y);
+					yield return new Point2Int(x, y);
 			}
 	}
 
@@ -173,7 +171,7 @@ public class Grid<T> : IGrid<T>
 		var arr = new T[UsedWidth, UsedHeight];
 		for (int x = usedMinX; x <= usedMaxX; x++)
 			for (int y = usedMinY; y <= usedMaxY; y++)
-				arr[x - usedMinX, y - usedMinY] = Values[x, y];
+				arr[x - usedMinX, y - usedMinY] = _values[x, y];
 		return arr;
 	}
 
@@ -196,7 +194,7 @@ public class Grid<T> : IGrid<T>
 
 	public bool XInBound(int x) => x >= MinX && x <= MaxX;
 	public bool YInBound(int y) => y >= MinY && y <= MaxY;
-	public bool PointInBound(Point pt) => XInBound(pt.X) && YInBound(pt.Y);
+	public bool PointInBound(Point2Int pt) => XInBound(pt.X) && YInBound(pt.Y);
 
 	public static Grid<T> FromArray(T defaultValue, T[,] sourceGrid, GridPlane plane)
 	{
@@ -220,7 +218,7 @@ public class Grid<T> : IGrid<T>
 
 
 
-	public void ApplyLine(Line line, Func<(T currentValue, Point position), T> valueChange)
+	public void ApplyLine(Line2DInt line, Func<(T currentValue, Point2Int position), T> valueChange)
 	{
 		foreach (var point in line.Points())
 			this[point] = valueChange((this[point], point));

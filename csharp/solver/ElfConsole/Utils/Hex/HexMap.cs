@@ -29,7 +29,7 @@ public class HexMap<T> : MultiDimentionalArray<T>
 		set => base[new int[] { col, row }] = value;
 	}
 
-	public T? this[Point point]
+	public T? this[Point2Int point]
 	{
 		get => base[new int[] { point.X, point.Y }];
 		set => base[new int[] { point.X, point.Y }] = value;
@@ -63,7 +63,7 @@ public class Hex<T>
 	public readonly HexMap<T> Map;
 
 
-	public readonly Point Point;
+	public readonly Point2Int Point;
 	public int Q => Point.X;
 	public int R => Point.Y;
 
@@ -75,7 +75,7 @@ public class Hex<T>
 	protected Hex(int q, int r, HexMap<T> map)
 	{
 		Map = map;
-		Point = new Point(q, r);
+		Point = new Point2Int(q, r);
 	}
 
 

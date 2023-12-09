@@ -7,11 +7,11 @@ public class BlockFillBar
 {
 	public readonly ConsoleColor _Color;
 
-	private readonly Point _position;
+	private readonly Point2Int _position;
 	private int _width;
 	private Styles _style;
 
-	public BlockFillBar(Point position, int width, ConsoleColor color, Styles style)
+	public BlockFillBar(Point2Int position, int width, ConsoleColor color, Styles style)
 	{
 		_width = width;
 		_style = style;

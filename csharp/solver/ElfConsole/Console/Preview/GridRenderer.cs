@@ -8,9 +8,9 @@ public class GridRenderer<T>
 	public IGrid<T>? Grid;
 	private Func<T, char> _getTilePreview;
 	public Func<T, ConsoleColor>? _GetTileColor;
-	public Func<T, Point, ConsoleColor>? _GetTileColorWithPosition;
+	public Func<T, Point2Int, ConsoleColor>? _GetTileColorWithPosition;
 	public char EmptyChar = ' ';
-	public Point Offset;
+	public Point2Int Offset;
 
 	private int GridUsedWidth => Grid == null ? 0 : Grid.UsedWidth;
 	private int GridUsedHeight => Grid == null ? 0 : Grid.UsedHeight;
@@ -20,13 +20,13 @@ public class GridRenderer<T>
 
 	private Grid<char> _renderingChar;
 	private Grid<ConsoleColor> _renderingColor;
-	private List<Point> _changedPosition = new List<Point>();
+	private List<Point2Int> _changedPosition = new List<Point2Int>();
 
 	public GridRenderer(Func<T, char> getTilePreview, RectInt drawZone)
 	{
 		_getTilePreview = getTilePreview;
 		DrawZone = drawZone;
-		Offset = Point.ZERO;
+		Offset = Point2Int.ZERO;
 		_renderingChar = new Grid<char>(' ', drawZone.WidthRange, drawZone.HeightRange);
 		_renderingColor = new Grid<ConsoleColor>(ConsoleColor.White, drawZone.WidthRange, drawZone.HeightRange);
 	}
@@ -63,7 +63,7 @@ public class GridRenderer<T>
 		var tileChar = _getTilePreview(tileValue);
 		if (_renderingChar[x, y] != tileChar)
 		{
-			_changedPosition.Add(new Point(x, y));
+			_changedPosition.Add(new Point2Int(x, y));
 			_renderingChar[x, y] = tileChar;
 		}
 		if (_GetTileColor != null)
@@ -71,18 +71,18 @@ public class GridRenderer<T>
 			var tileColor = _GetTileColor(tileValue);
 			if (_renderingColor[x, y] != tileColor)
 			{
-				if (!_changedPosition.Contains(new Point(x, y)))
-					_changedPosition.Add(new Point(x, y));
+				if (!_changedPosition.Contains(new Point2Int(x, y)))
+					_changedPosition.Add(new Point2Int(x, y));
 				_renderingColor[x, y] = tileColor;
 			}
 		}
 		if (_GetTileColorWithPosition != null)
 		{
-			var tileColor = _GetTileColorWithPosition(tileValue, new Point(x, y));
+			var tileColor = _GetTileColorWithPosition(tileValue, new Point2Int(x, y));
 			if (_renderingColor[x, y] != tileColor)
 			{
-				if (!_changedPosition.Contains(new Point(x, y)))
-					_changedPosition.Add(new Point(x, y));
+				if (!_changedPosition.Contains(new Point2Int(x, y)))
+					_changedPosition.Add(new Point2Int(x, y));
 				_renderingColor[x, y] = tileColor;
 			}
 		}

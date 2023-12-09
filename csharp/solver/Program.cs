@@ -114,13 +114,13 @@ Console.WriteLine("Hello, World!");
 // Console.WriteLine($"Day5 Part2: {day5answer} in {stopwatch.ElapsedMilliseconds}ms");
 
 
-var stopwatch = new Stopwatch();
-stopwatch.Start();
-var example = @"Time:      7  15   30
-Distance:  9  40  200";
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+// var example = @"Time:      7  15   30
+// Distance:  9  40  200";
 
-// var day6answer = Day6.Part2(example);
-var day6answer = Day6.Part2Take2(File.ReadAllText("inputs/day6.txt"));
-stopwatch.Stop();
-Console.WriteLine($"Day6 Part2: {day6answer} in {stopwatch.ElapsedMilliseconds}ms");
+// // var day6answer = Day6.Part2(example);
+// var day6answer = Day6.Part2Take2(File.ReadAllText("inputs/day6.txt"));
+// stopwatch.Stop();
+// Console.WriteLine($"Day6 Part2: {day6answer} in {stopwatch.ElapsedMilliseconds}ms");
 

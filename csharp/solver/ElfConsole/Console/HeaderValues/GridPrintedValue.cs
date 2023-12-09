@@ -7,12 +7,12 @@ public class GridPrintedValue
 	private int _width;
 	private ArrayPrintedValue[] _arrayPrintedValues;
 
-	public GridPrintedValue(Point position, int cellWidth, int nbCells, int cellSpacing, int nbRows, ConsoleColor color, string? format = null)
+	public GridPrintedValue(Point2Int position, int cellWidth, int nbCells, int cellSpacing, int nbRows, ConsoleColor color, string? format = null)
 	{
 		_width = cellWidth;
 		_arrayPrintedValues = new ArrayPrintedValue[nbRows];
 		for (int i = 0; i < nbRows; i++)
-			_arrayPrintedValues[i] = new ArrayPrintedValue(position + new Point(0, i), cellWidth, nbCells, cellSpacing, color, format);
+			_arrayPrintedValues[i] = new ArrayPrintedValue(position + new Point2Int(0, i), cellWidth, nbCells, cellSpacing, color, format);
 	}
 
 	public void SetColor(int x, int y, ConsoleColor color)

@@ -24,7 +24,7 @@ public class SevenSegmentDisplayRenderer
 	public char _BottomRightSegmentChar = VERTICAL;
 	public char _BottomSegmentChar = HORIZONTAL;
 
-	public SevenSegmentDisplayRenderer(Point position, int horizontalWidth, int verticalSegmentHeight, ConsoleColor onCcolor, ConsoleColor offCcolor)
+	public SevenSegmentDisplayRenderer(Point2Int position, int horizontalWidth, int verticalSegmentHeight, ConsoleColor onCcolor, ConsoleColor offCcolor)
 	{
 		_x = position.X;
 		_y = position.Y;

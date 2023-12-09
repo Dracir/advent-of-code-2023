@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public abstract class ValuePrintBase
 {
-	public readonly Point Position;
+	public readonly Point2Int Position;
 	protected ConsoleColor BackgroundColor;
 	protected ConsoleColor ForegroundColor;
 
-	protected ValuePrintBase(Point position, ConsoleColor backgroundColor, ConsoleColor foregroundColor)
+	protected ValuePrintBase(Point2Int position, ConsoleColor backgroundColor, ConsoleColor foregroundColor)
 	{
 		Position = position;
 		BackgroundColor = backgroundColor;

@@ -1,5 +1,6 @@
-
 using System.Collections.Generic;
+
+namespace AocUtils;
 
 public interface IGrid<T>
 {
@@ -16,19 +17,19 @@ public interface IGrid<T>
 	int FullWidth { get; }
 	int FullHeight { get; }
 
-	Point TopLeft { get; }
-	Point TopRight { get; }
-	Point BottomLeft { get; }
-	Point BottomRight { get; }
-	Point Center { get; }
+	Point2Int TopLeft { get; }
+	Point2Int TopRight { get; }
+	Point2Int BottomLeft { get; }
+	Point2Int BottomRight { get; }
+	Point2Int Center { get; }
 
-	T this[Point key] { get; set; }
+	T this[Point2Int key] { get; set; }
 	T this[int x, int y] { get; set; }
 
 
-	IEnumerable<Point> Points();
-	IEnumerable<Point> AreaSquareAround(Point pt, int radiusDistance);
-	IEnumerable<Point> AreaAround(Point pt, int manhattanDistance);
+	IEnumerable<Point2Int> Points();
+	IEnumerable<Point2Int> AreaSquareAround(Point2Int pt, int radiusDistance);
+	IEnumerable<Point2Int> AreaAround(Point2Int pt, int manhattanDistance);
 	IEnumerable<int> ColumnIndexs();
 	IEnumerable<int> RowIndexs();
 	T[,] ToArray();
@@ -37,8 +38,9 @@ public interface IGrid<T>
 
 	bool XInBound(int x);
 	bool YInBound(int y);
-	bool PointInBound(Point pt);
+	bool PointInBound(Point2Int pt);
 
 }
+
 public enum GridPlane { XY, YX };
 public enum GridAxe { X, Y };

@@ -15,9 +15,9 @@ public static class ElfConsole
 	private static int WriteHeight { get { return Height - WriteTop; } }
 	private static int WriteWidth { get { return Width; } }
 
-	public static Point Position
+	public static Point2Int Position
 	{
-		get { return new Point(Console.CursorLeft, Console.CursorTop); }
+		get { return new Point2Int(Console.CursorLeft, Console.CursorTop); }
 		set
 		{
 			Console.CursorLeft = Math.Clamp(value.X, 0, Right);
@@ -103,7 +103,7 @@ public static class ElfConsole
 	{
 		if (x >= WriteRight || y >= WriteBottom || x < 0 || y < 0)
 			return;
-		Position = new Point(WriteLeft + x, WriteTop + y);
+		Position = new Point2Int(WriteLeft + x, WriteTop + y);
 		File.AppendAllText("drawn.txt", $"({x},{y}) : {value}\n");
 		Console.Write(value);
 	}
@@ -119,7 +119,7 @@ public static class ElfConsole
 			text = text.Substring(WriteRight - x - 1) + '…';
 		File.AppendAllText("drawn.txt", $"({x},{y}) : {value}\n");
 
-		Position = new Point(x, y);
+		Position = new Point2Int(x, y);
 		Console.WriteLine(text);
 
 	}
