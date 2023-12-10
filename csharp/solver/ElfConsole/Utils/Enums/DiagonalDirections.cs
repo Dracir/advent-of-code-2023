@@ -8,7 +8,7 @@ public static class DiagonalDirectionExtentions
 {
 	//public static Direction Left(this Direction direction) => (Direction)(((int)direction + 3) % 4);
 	//public static Direction Right(this Direction direction) => (Direction)(((int)direction + 1) % 4);
-	public static Point2Int ToPoint(this DiagonalDirection direction) => direction switch
+	public static Point2Int ToPoint(this DiagonalDirection diagonalDirection) => diagonalDirection switch
 	{
 		DiagonalDirection.NorthWest => new Point2Int(-1, -1),
 		DiagonalDirection.NorthEast => new Point2Int(1, 1),

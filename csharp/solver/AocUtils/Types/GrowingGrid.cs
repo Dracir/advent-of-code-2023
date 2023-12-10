@@ -149,6 +149,16 @@ public class GrowingGrid<T> : IGrid<T>
 	public IEnumerable<int> RowIndexs() => _grid.RowIndexs();
 	public T[,] ToArray() => _grid.ToArray();
 
+	public bool TryGet(Point2Int pt, out T value)
+	{
+		throw new NotImplementedException();
+	}
+
+	public bool TryGet(int x, int y, out T value)
+	{
+		throw new NotImplementedException();
+	}
+
 	public struct GrowingGridEvent
 	{
 		public GrowingGrid<T> Grid;

@@ -59,19 +59,28 @@ public static class IEnumerableExtentions
 		return enumerable.Aggregate(1L, (mult, value) => mult * func(value));
 	}
 
-	public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
+	public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
 	{
 		foreach (T item in enumeration)
 		{
 			action(item);
+			yield return item;
 		}
 	}
 
-
-	public static T MaxBy<T>(this IEnumerable<T> enumeration, Func<T, int> selector)
+	public static (int Value, int Index) MaxBy(this IEnumerable<int> enumeration)
 	{
-		return enumeration.Aggregate(enumeration.First(), (currMax, x) => selector(currMax) < selector(x) ? x : currMax);
+		return enumeration.Select((value, index) => (value, index))
+			.Aggregate((value: enumeration.First(), index: 0), (currMaxTupple, otherTupple) => currMaxTupple.value > otherTupple.value ? currMaxTupple : otherTupple);
 	}
+
+	public static (T Value, int Index) MaxBy<T>(this IEnumerable<T> enumeration, Func<T, int> selector)
+	{
+		return enumeration.Select((value, index) => (value, index))
+			.Aggregate((value: enumeration.First(), index: 0), (currMaxTupple, otherTupple)
+					=> selector(currMaxTupple.value) > selector(otherTupple.value) ? currMaxTupple : otherTupple);
+	}
+
 	public static T MaxBy<T>(this IEnumerable<T> enumeration, Func<T, long> selector)
 	{
 		return enumeration.Aggregate(enumeration.First(), (currMax, x) => selector(currMax) < selector(x) ? x : currMax);

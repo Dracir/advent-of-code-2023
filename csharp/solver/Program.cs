@@ -72,56 +72,56 @@ Console.WriteLine("Hello, World!");
 // // var day4Answer = Day4.Part1(File.ReadAllText("inputs/day4.txt"));
 
 
-var day5Example1 = @"seeds: 79 14 55 13
+// var day5Example1 = @"seeds: 79 14 55 13
 
-seed-to-soil map:
-50 98 2
-52 50 48
+// seed-to-soil map:
+// 50 98 2
+// 52 50 48
 
-soil-to-fertilizer map:
-0 15 37
-37 52 2
-39 0 15
+// soil-to-fertilizer map:
+// 0 15 37
+// 37 52 2
+// 39 0 15
 
-fertilizer-to-water map:
-49 53 8
-0 11 42
-42 0 7
-57 7 4
+// fertilizer-to-water map:
+// 49 53 8
+// 0 11 42
+// 42 0 7
+// 57 7 4
 
-water-to-light map:
-88 18 7
-18 25 70
+// water-to-light map:
+// 88 18 7
+// 18 25 70
 
-light-to-temperature map:
-45 77 23
-81 45 19
-68 64 13
+// light-to-temperature map:
+// 45 77 23
+// 81 45 19
+// 68 64 13
 
-temperature-to-humidity map:
-0 69 1
-1 0 69
+// temperature-to-humidity map:
+// 0 69 1
+// 1 0 69
 
-humidity-to-location map:
-60 56 37
-56 93 4";
-var stopwatch = new Stopwatch();
-stopwatch.Start();
-// var day5answer = Day5.Part2(day5Example1);
+// humidity-to-location map:
+// 60 56 37
+// 56 93 4";
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+// // var day5answer = Day5.Part2(day5Example1);
 
-// var day5answerPart1 = Day5.Part1(day5Example1);
-var day5answerPart1 = Day5.Part1(File.ReadAllText("inputs/day5.txt"));
-var day5answerPart2 = Day5.Part2(File.ReadAllText("inputs/day5.txt"));
-// var day5answerPart2 = Day5.Part2(day5Example1);
+// // var day5answerPart1 = Day5.Part1(day5Example1);
+// var day5answerPart1 = Day5.Part1(File.ReadAllText("inputs/day5.txt"));
+// var day5answerPart2 = Day5.Part2(File.ReadAllText("inputs/day5.txt"));
+// // var day5answerPart2 = Day5.Part2(day5Example1);
 
-stopwatch.Stop();
-var day5myAnswerPart1 = 214922730ul;
-var day5myAnswerPart2 = 148041808ul;
+// stopwatch.Stop();
+// var day5myAnswerPart1 = 214922730ul;
+// var day5myAnswerPart2 = 148041808ul;
 
-Console.WriteLine($"Day5 Part1: {day5answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
-Console.WriteLine($"Day5 Part2: {day5answerPart2} in {stopwatch.ElapsedMilliseconds}ms");
-Console.WriteLine($"Day5 Part1: {day5answerPart1 == day5myAnswerPart1}");
-Console.WriteLine($"Day5 Part2: {day5answerPart2 == day5myAnswerPart2}");
+// Console.WriteLine($"Day5 Part1: {day5answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
+// Console.WriteLine($"Day5 Part2: {day5answerPart2} in {stopwatch.ElapsedMilliseconds}ms");
+// Console.WriteLine($"Day5 Part1: {day5answerPart1 == day5myAnswerPart1}");
+// Console.WriteLine($"Day5 Part2: {day5answerPart2 == day5myAnswerPart2}");
 
 // var stopwatch = new Stopwatch();
 // stopwatch.Start();
@@ -133,3 +133,90 @@ Console.WriteLine($"Day5 Part2: {day5answerPart2 == day5myAnswerPart2}");
 // stopwatch.Stop();
 // Console.WriteLine($"Day6 Part2: {day6answer} in {stopwatch.ElapsedMilliseconds}ms");
 
+
+
+// var day7example1 = @"32T3K 765
+// T55J5 684
+// KK677 28
+// KTJJT 220
+// QQQJA 483";
+
+
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+// // var day7answerPart1 = Day7.Part1(day7example1);
+// // var day7answerPart1 = Day7.Part1(day7example2);
+// // var day7answerPart1 = Day7.Part1(File.ReadAllText("inputs/day7.txt"));
+// var day7answerPart2 = Day7.Part2(File.ReadAllText("inputs/day7.txt"));
+// // var day7answerPart2 = Day7.Part2(day7example1);
+
+// stopwatch.Stop();
+// Console.WriteLine($"Day7 Part2: {day7answerPart2} in {stopwatch.ElapsedMilliseconds}ms");
+// Console.WriteLine($"Day7 Part1: {day7answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
+
+//{(1,2),(4,5),}
+// var day8example1 = @"RL
+
+// AAA = (BBB, CCC)
+// CCC = (ZZZ, GGG)
+// BBB = (DDD, EEE)
+// DDD = (DDD, DDD)
+// EEE = (EEE, EEE)
+// GGG = (GGG, GGG)
+// ZZZ = (ZZZ, ZZZ)";
+
+// var day8example2 = @"LLR
+
+// AAA = (BBB, BBB)
+// BBB = (AAA, ZZZ)
+// ZZZ = (ZZZ, ZZZ)";
+
+// var day8example3 = @"LR
+
+// 11A = (11B, XXX)
+// 11B = (XXX, 11Z)
+// 11Z = (11B, XXX)
+// 22A = (22B, XXX)
+// 22B = (22C, 22C)
+// 22C = (22Z, 22Z)
+// 22Z = (22B, 22B)
+// XXX = (XXX, XXX)";
+
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+
+// // var day8answerPart2 = Day8.Part2(day8example3);
+// var day8answerPart2 = Day8.Part2(File.ReadAllText("inputs/day8.txt")); //13385272668829
+
+// stopwatch.Stop();
+// Console.WriteLine($"Day8 Part2: {day8answerPart2} in {stopwatch.ElapsedMilliseconds}ms");
+
+
+// var day9example1 = @"0 3 6 9 12 15
+// 1 3 6 10 15 21
+// 10 13 16 21 30 45";
+
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+
+// // var day9answerPart1 = Day9.Part2(day9example1);
+// var day9answerPart1 = Day9.Part2(File.ReadAllText("inputs/day9.txt"));
+
+// stopwatch.Stop();
+// Console.WriteLine($"Day9 Part2: {day9answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
+
+
+var day10example1 = @"..F7.
+.FJ|.
+SJ.L7
+|F--J
+LJ...";
+
+var stopwatch = new Stopwatch();
+stopwatch.Start();
+
+// var day10answerPart1 = Day10.Part1(day10example1);
+var day10answerPart1 = Day10.Part1(File.ReadAllText("inputs/day10.txt"));
+
+stopwatch.Stop();
+Console.WriteLine($"Day10 Part1: {day10answerPart1} in {stopwatch.ElapsedMilliseconds}ms");

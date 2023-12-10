@@ -40,6 +40,9 @@ public interface IGrid<T>
 	bool YInBound(int y);
 	bool PointInBound(Point2Int pt);
 
+	bool TryGet(Point2Int pt, out T value);
+	bool TryGet(int x, int y, out T value);
+
 }
 
 public enum GridPlane { XY, YX };

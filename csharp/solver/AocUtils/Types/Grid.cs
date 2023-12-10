@@ -37,6 +37,19 @@ public class Grid<T> : IGrid<T>
 
 	protected T DefaultValue;
 
+	public Grid(T defaultValue, int xRange, int yRange)
+	{
+		this.DefaultValue = defaultValue;
+		_offsetX = 0;
+		_offsetY = 0;
+		usedMinX = 0;
+		usedMaxX = 0;
+		usedMinY = 0;
+		usedMaxY = 0;
+		_values = new T[xRange, yRange];
+		foreach (var item in PointsAndValues())
+			this[item.Point] = defaultValue;
+	}
 	public Grid(T defaultValue, RangeInt xRange, RangeInt yRange)
 	{
 		this.DefaultValue = defaultValue;
@@ -68,6 +81,34 @@ public class Grid<T> : IGrid<T>
 			usedMinY = Math.Min(usedMinY, y);
 			usedMaxX = Math.Max(usedMaxX, x);
 			usedMaxY = Math.Max(usedMaxY, y);
+		}
+	}
+
+	public bool TryGet(Point2Int pt, out T value)
+	{
+		if (PointInBound(pt))
+		{
+			value = this[pt];
+			return true;
+		}
+		else
+		{
+			value = DefaultValue;
+			return false;
+		}
+	}
+
+	public bool TryGet(int x, int y, out T value)
+	{
+		if (PointInBound(x, y))
+		{
+			value = this[x, y];
+			return true;
+		}
+		else
+		{
+			value = DefaultValue;
+			return false;
 		}
 	}
 
@@ -195,6 +236,7 @@ public class Grid<T> : IGrid<T>
 	public bool XInBound(int x) => x >= MinX && x <= MaxX;
 	public bool YInBound(int y) => y >= MinY && y <= MaxY;
 	public bool PointInBound(Point2Int pt) => XInBound(pt.X) && YInBound(pt.Y);
+	public bool PointInBound(int x, int y) => XInBound(x) && YInBound(y);
 
 	public static Grid<T> FromArray(T defaultValue, T[,] sourceGrid, GridPlane plane)
 	{

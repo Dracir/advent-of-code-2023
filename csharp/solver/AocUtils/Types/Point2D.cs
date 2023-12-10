@@ -66,4 +66,7 @@ public struct Point2Int
 			   X == point.X && Y == point.Y;
 	}
 
+	public static bool operator ==(Point2Int left, Point2Int right) => left.X == right.X && left.Y == right.Y;
+
+	public static bool operator !=(Point2Int left, Point2Int right) => left.X != right.X || left.Y != right.Y;
 }

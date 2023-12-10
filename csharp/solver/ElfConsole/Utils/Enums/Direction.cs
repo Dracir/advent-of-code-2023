@@ -10,10 +10,19 @@ public static class DirectionExtentions
 	public static Direction Right(this Direction direction) => (Direction)(((int)direction + 1) % 4);
 	public static Point2Int ToPoint(this Direction direction) => direction switch
 	{
-		Direction.North => new Point2Int(0, -1),
+		Direction.North => new Point2Int(0, 1),
 		Direction.Est => new Point2Int(1, 0),
-		Direction.South => new Point2Int(0, 1),
+		Direction.South => new Point2Int(0, -1),
 		Direction.West => new Point2Int(-1, 0),
 		_ => new Point2Int(0, 0),
+	};
+
+	public static Direction Fliped(this Direction direction) => direction switch
+	{
+		Direction.North => Direction.South,
+		Direction.Est => Direction.West,
+		Direction.South => Direction.North,
+		Direction.West => Direction.Est,
+		_ => Direction.North,
 	};
 }
