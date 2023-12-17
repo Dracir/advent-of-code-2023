@@ -17,20 +17,20 @@ public interface IGrid<T>
 	int FullWidth { get; }
 	int FullHeight { get; }
 
-	Point2Int TopLeft { get; }
-	Point2Int TopRight { get; }
-	Point2Int BottomLeft { get; }
-	Point2Int BottomRight { get; }
-	Point2Int Center { get; }
+	Vector2Int TopLeft { get; }
+	Vector2Int TopRight { get; }
+	Vector2Int BottomLeft { get; }
+	Vector2Int BottomRight { get; }
+	Vector2Int Center { get; }
 
-	T this[Point2Int key] { get; set; }
+	T this[Vector2Int key] { get; set; }
 	T this[int x, int y] { get; set; }
 
 
-	IEnumerable<Point2Int> Points();
-	IEnumerable<Point2Int> AreaSquareAround(Point2Int pt, int radiusDistance);
-	IEnumerable<Point2Int> AreaAround(Point2Int pt, int manhattanDistance);
-	IEnumerable<int> ColumnIndexs();
+	IEnumerable<Vector2Int> Points();
+	IEnumerable<Vector2Int> AreaSquareAround(Vector2Int pt, int radiusDistance);
+	IEnumerable<Vector2Int> AreaAround(Vector2Int pt, int manhattanDistance);
+	IEnumerable<int> ColIndexs();
 	IEnumerable<int> RowIndexs();
 	T[,] ToArray();
 
@@ -38,9 +38,9 @@ public interface IGrid<T>
 
 	bool XInBound(int x);
 	bool YInBound(int y);
-	bool PointInBound(Point2Int pt);
+	bool PointInBound(Vector2Int pt);
 
-	bool TryGet(Point2Int pt, out T value);
+	bool TryGet(Vector2Int pt, out T value);
 	bool TryGet(int x, int y, out T value);
 
 }

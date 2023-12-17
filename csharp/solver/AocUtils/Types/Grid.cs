@@ -65,7 +65,7 @@ public class Grid<T> : IGrid<T>
 	}
 
 
-	public virtual T this[Point2Int key]
+	public virtual T this[Vector2Int key]
 	{
 		get { return this[key.X, key.Y]; }
 		set { this[key.X, key.Y] = value; }
@@ -84,7 +84,7 @@ public class Grid<T> : IGrid<T>
 		}
 	}
 
-	public bool TryGet(Point2Int pt, out T value)
+	public bool TryGet(Vector2Int pt, out T value)
 	{
 		if (PointInBound(pt))
 		{
@@ -113,27 +113,57 @@ public class Grid<T> : IGrid<T>
 	}
 
 
-	public Point2Int TopLeft => new(usedMinX, usedMaxY);
-	public Point2Int TopRight => new(usedMaxX, usedMaxY);
-	public Point2Int BottomLeft => new(usedMinX, usedMinY);
-	public Point2Int BottomRight => new(usedMaxX, usedMinY);
-	public Point2Int Center => new(_offsetX, _offsetY);
+	public Vector2Int TopLeft => new(usedMinX, usedMaxY);
+	public Vector2Int TopRight => new(usedMaxX, usedMaxY);
+	public Vector2Int BottomLeft => new(usedMinX, usedMinY);
+	public Vector2Int BottomRight => new(usedMaxX, usedMinY);
+	public Vector2Int Center => new(_offsetX, _offsetY);
 
-	public IEnumerable<Point2Int> Points()
+	public IEnumerable<Vector2Int> Points()
 	{
 		for (int x = usedMinX; x <= usedMaxX; x++)
 			for (int y = usedMinY; y <= usedMaxY; y++)
-				yield return new Point2Int(x, y);
+				yield return new Vector2Int(x, y);
 	}
-	public IEnumerable<(Point2Int Point, T Value)> PointsAndValues()
+	public IEnumerable<(Vector2Int Point, T Value)> PointsAndValues()
 	{
 		for (int x = usedMinX; x <= usedMaxX; x++)
 			for (int y = usedMinY; y <= usedMaxY; y++)
-				yield return (new Point2Int(x, y), this[x, y]);
+				yield return (new Vector2Int(x, y), this[x, y]);
 	}
 
 
-	public IEnumerable<Point2Int> AreaSquareAround(Point2Int pt, int radiusDistance)
+	public IEnumerable<Vector2Int> PointsOnBorder()
+	{
+		for (int x = MinX; x <= MaxX; x++)
+		{
+			yield return new Vector2Int(x, MinY);
+			yield return new Vector2Int(x, MaxY);
+		}
+		for (int y = MinY; y <= MaxY; y++)
+		{
+			yield return new Vector2Int(MinX, y);
+			yield return new Vector2Int(MaxX, y);
+		}
+	}
+
+
+	public IEnumerable<Vector2Int> PointsExpendedFromBorder(int expendedAmount)
+	{
+		for (int x = MinX - expendedAmount; x <= MaxX + expendedAmount; x++)
+		{
+			yield return new Vector2Int(x, MinY - expendedAmount);
+			yield return new Vector2Int(x, MaxY + expendedAmount);
+		}
+		for (int y = MinY - expendedAmount; y <= MaxY + expendedAmount; y++)
+		{
+			yield return new Vector2Int(MinX - expendedAmount, y);
+			yield return new Vector2Int(MaxX + expendedAmount, y);
+		}
+	}
+
+
+	public IEnumerable<Vector2Int> AreaSquareAround(Vector2Int pt, int radiusDistance)
 	{
 
 		int x1 = Math.Max(usedMinX, pt.X - radiusDistance);
@@ -143,11 +173,22 @@ public class Grid<T> : IGrid<T>
 
 		for (int x = x1; x <= x2; x++)
 			for (int y = y1; y <= y2; y++)
-				yield return new Point2Int(x, y);
+				yield return new Vector2Int(x, y);
 	}
 
+	public IEnumerable<T> Row(int y)
+	{
+		for (int x = usedMinX; x <= usedMaxX; x++)
+			yield return this[x, y];
+	}
 
-	public IEnumerable<(Point2Int Point, T Value)> PointAndValuesSquareAround(Point2Int pt, int radiusDistance)
+	public IEnumerable<T> Col(int x)
+	{
+		for (int y = usedMinY; y <= usedMaxY; y++)
+			yield return this[x, y];
+	}
+
+	public IEnumerable<(Vector2Int Point, T Value)> PointAndValuesSquareAround(Vector2Int pt, int radiusDistance)
 	{
 
 		int x1 = Math.Max(usedMinX, pt.X - radiusDistance);
@@ -157,11 +198,11 @@ public class Grid<T> : IGrid<T>
 
 		for (int x = x1; x <= x2; x++)
 			for (int y = y1; y <= y2; y++)
-				yield return (new Point2Int(x, y), this[x, y]);
+				yield return (new Vector2Int(x, y), this[x, y]);
 	}
 
 
-	public IEnumerable<(Point2Int Point, T Value)> PointAndValuesInDirection(Point2Int pt, int dx, int dy, bool includeStartingPoint)
+	public IEnumerable<(Vector2Int Point, T Value)> PointAndValuesInDirection(Vector2Int pt, int dx, int dy, bool includeStartingPoint)
 	{
 		var x = pt.X;
 		var y = pt.Y;
@@ -173,13 +214,13 @@ public class Grid<T> : IGrid<T>
 
 		while (x >= usedMinX && x <= usedMaxX && y >= usedMinY && y <= usedMaxY)
 		{
-			yield return (new Point2Int(x, y), this[x, y]);
+			yield return (new Vector2Int(x, y), this[x, y]);
 			x += dx;
 			y += dy;
 		}
 	}
 
-	public IEnumerable<Point2Int> AreaAround(Point2Int pt, int manhattanDistance)
+	public IEnumerable<Vector2Int> AreaAround(Vector2Int pt, int manhattanDistance)
 	{
 		int x1 = Math.Max(usedMinX, pt.X - manhattanDistance);
 		int y1 = Math.Max(usedMinY, pt.Y - manhattanDistance);
@@ -191,11 +232,11 @@ public class Grid<T> : IGrid<T>
 			{
 				var distance = Math.Abs(pt.X - x) + Math.Abs(pt.Y - y);
 				if (distance <= manhattanDistance)
-					yield return new Point2Int(x, y);
+					yield return new Vector2Int(x, y);
 			}
 	}
 
-	public IEnumerable<int> ColumnIndexs()
+	public IEnumerable<int> ColIndexs()
 	{
 		for (int y = usedMinY; y <= usedMaxY; y++)
 			yield return y;
@@ -235,7 +276,7 @@ public class Grid<T> : IGrid<T>
 
 	public bool XInBound(int x) => x >= MinX && x <= MaxX;
 	public bool YInBound(int y) => y >= MinY && y <= MaxY;
-	public bool PointInBound(Point2Int pt) => XInBound(pt.X) && YInBound(pt.Y);
+	public bool PointInBound(Vector2Int pt) => XInBound(pt.X) && YInBound(pt.Y);
 	public bool PointInBound(int x, int y) => XInBound(x) && YInBound(y);
 
 	public static Grid<T> FromArray(T defaultValue, T[,] sourceGrid, GridPlane plane)
@@ -260,7 +301,7 @@ public class Grid<T> : IGrid<T>
 
 
 
-	public void ApplyLine(Line2DInt line, Func<(T currentValue, Point2Int position), T> valueChange)
+	public void ApplyLine(Line2DInt line, Func<(T currentValue, Vector2Int position), T> valueChange)
 	{
 		foreach (var point in line.Points())
 			this[point] = valueChange((this[point], point));

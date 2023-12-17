@@ -32,15 +32,15 @@ public class GrowingGrid<T> : IGrid<T>
 	public int GrowthTimesDown = 0;
 	public int GrowthTimes => GrowthTimesRight + GrowthTimesLeft + GrowthTimesUp + GrowthTimesDown;
 
-	public Point2Int TopLeft => _grid.TopLeft;
-	public Point2Int TopRight => _grid.TopRight;
-	public Point2Int BottomLeft => _grid.BottomLeft;
-	public Point2Int BottomRight => _grid.BottomRight;
-	public Point2Int Center => _grid.Center;
+	public Vector2Int TopLeft => _grid.TopLeft;
+	public Vector2Int TopRight => _grid.TopRight;
+	public Vector2Int BottomLeft => _grid.BottomLeft;
+	public Vector2Int BottomRight => _grid.BottomRight;
+	public Vector2Int Center => _grid.Center;
 
 	public bool XInBound(int x) => _grid.XInBound(x);
 	public bool YInBound(int y) => _grid.YInBound(y);
-	public bool PointInBound(Point2Int pt) => _grid.PointInBound(pt);
+	public bool PointInBound(Vector2Int pt) => _grid.PointInBound(pt);
 
 	public Action<GrowingGridEvent>? OnGridGrown;
 
@@ -70,7 +70,7 @@ public class GrowingGrid<T> : IGrid<T>
 		AddGrid(0, 0, startingGrid, plane);
 	}
 
-	public T this[Point2Int key]
+	public T this[Vector2Int key]
 	{
 		get { return this[key.X, key.Y]; }
 		set { this[key.X, key.Y] = value; }
@@ -142,14 +142,14 @@ public class GrowingGrid<T> : IGrid<T>
 		OnGridGrown?.Invoke(new GrowingGridEvent(this, up, right, down, left));
 	}
 
-	public IEnumerable<Point2Int> Points() => _grid.Points();
-	public IEnumerable<Point2Int> AreaSquareAround(Point2Int pt, int radiusDistance) => _grid.AreaSquareAround(pt, radiusDistance);
-	public IEnumerable<Point2Int> AreaAround(Point2Int pt, int manhattanDistance) => _grid.AreaAround(pt, manhattanDistance);
-	public IEnumerable<int> ColumnIndexs() => _grid.ColumnIndexs();
+	public IEnumerable<Vector2Int> Points() => _grid.Points();
+	public IEnumerable<Vector2Int> AreaSquareAround(Vector2Int pt, int radiusDistance) => _grid.AreaSquareAround(pt, radiusDistance);
+	public IEnumerable<Vector2Int> AreaAround(Vector2Int pt, int manhattanDistance) => _grid.AreaAround(pt, manhattanDistance);
+	public IEnumerable<int> ColIndexs() => _grid.ColIndexs();
 	public IEnumerable<int> RowIndexs() => _grid.RowIndexs();
 	public T[,] ToArray() => _grid.ToArray();
 
-	public bool TryGet(Point2Int pt, out T value)
+	public bool TryGet(Vector2Int pt, out T value)
 	{
 		throw new NotImplementedException();
 	}

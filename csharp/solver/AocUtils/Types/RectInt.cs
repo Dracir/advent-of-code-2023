@@ -21,7 +21,7 @@ public struct RectInt
 		Width = w;
 		Height = h;
 	}
-	public RectInt(Point2Int bottomLeft, Point2Int topRight)
+	public RectInt(Vector2Int bottomLeft, Vector2Int topRight)
 	{
 		X = bottomLeft.X;
 		Y = bottomLeft.Y;
@@ -34,14 +34,14 @@ public struct RectInt
 		return new RectInt(X - left, Y - bottom, Width + left + right, Height + bottom + top);
 	}
 
-	public readonly bool IsOnBorder(Point2Int pt)
+	public readonly bool IsOnBorder(Vector2Int pt)
 	{
 		if (!Contains(pt)) return false;
 
 		return pt.X == X || pt.X == Right || pt.Y == Y || pt.Y == Top;
 	}
 
-	public readonly RectInt GrowToInclude(Point2Int point)
+	public readonly RectInt GrowToInclude(Vector2Int point)
 	{
 		var x = Math.Min(X, point.X);
 		var y = Math.Min(Y, point.Y);
@@ -51,7 +51,7 @@ public struct RectInt
 		return new RectInt(x, y, w, h);
 	}
 
-	public readonly bool Contains(Point2Int point) => Contains(point.X, point.Y);
+	public readonly bool Contains(Vector2Int point) => Contains(point.X, point.Y);
 
 	public readonly bool Contains(int x, int y) => x >= X && x <= Right && y >= Y && y <= Top;
 }

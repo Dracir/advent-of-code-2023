@@ -2,10 +2,10 @@ namespace AocUtils;
 
 public struct Line2DInt
 {
-	public Point2Int A;
-	public Point2Int B;
+	public Vector2Int A;
+	public Vector2Int B;
 
-	public Line2DInt(Point2Int a, Point2Int b)
+	public Line2DInt(Vector2Int a, Vector2Int b)
 	{
 		A = a;
 		B = b;
@@ -31,17 +31,17 @@ public struct Line2DInt
 		return null;
 	}
 
-	public readonly IEnumerable<Point2Int> Points()
+	public readonly IEnumerable<Vector2Int> Points()
 	{
 		if (IsHorizontal)
 		{
 			for (var x = MinX; x <= MaxX; x++)
-				yield return new Point2Int(x, A.Y);
+				yield return new Vector2Int(x, A.Y);
 		}
 		else if (IsVertical)
 		{
 			for (var y = MinY; y <= MaxY; y++)
-				yield return new Point2Int(A.X, y);
+				yield return new Vector2Int(A.X, y);
 		}
 		else if (IsDiagonal)
 		{
@@ -49,7 +49,7 @@ public struct Line2DInt
 			var yFactor = A.Y > B.Y ? -1 : 1;
 
 			foreach (var i in Enumerable.Range(0, Height))
-				yield return new Point2Int(A.X + xFactor * i, A.Y + yFactor * i);
+				yield return new Vector2Int(A.X + xFactor * i, A.Y + yFactor * i);
 		}
 	}
 

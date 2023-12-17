@@ -206,17 +206,50 @@ Console.WriteLine("Hello, World!");
 // Console.WriteLine($"Day9 Part2: {day9answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
 
 
-var day10example1 = @"..F7.
-.FJ|.
-SJ.L7
-|F--J
-LJ...";
+// var day10example1 = @"..F7.
+// .FJ|.
+// SJ.L7
+// |F--J
+// LJ...";
+
+// var day10example2 = @"FF7FSF7F7F7F7F7F---7
+// L|LJ||||||||||||F--J
+// FL-7LJLJ||||||LJL-77
+// F--JF--7||LJLJ7F7FJ-
+// L---JF-JLJ.||-FJLJJ7
+// |F|F-JF---7F7-L7L|7|
+// |FFJF7L7F-JF7|JL---7
+// 7-L-JL7||F7|L7F-7F7|
+// L.L7LFJ|||||FJL7||LJ
+// L7JLJL-JLJLJL--JLJ.L";
+
+// var stopwatch = new Stopwatch();
+// stopwatch.Start();
+
+// // var day10answerPart1 = Day10.Part2(day10example1);
+// // var day10answerPart1 = Day10.Part2(day10example2);
+// var day10answerPart1 = Day10.Part2(File.ReadAllText("inputs/day10.txt"));
+
+// stopwatch.Stop();
+// Console.WriteLine($"Day10 Part2: {day10answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
+
+
+var day11example1 = @"...#......
+.......#..
+#.........
+..........
+......#...
+.#........
+.........#
+..........
+.......#..
+#...#.....";
 
 var stopwatch = new Stopwatch();
 stopwatch.Start();
 
-// var day10answerPart1 = Day10.Part1(day10example1);
-var day10answerPart1 = Day10.Part1(File.ReadAllText("inputs/day10.txt"));
+// var day11answerPart1 = Day11.Part2(day11example1);
+var day11answerPart1 = Day11.Part2(File.ReadAllText("inputs/day11.txt"));
 
 stopwatch.Stop();
-Console.WriteLine($"Day10 Part1: {day10answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
+Console.WriteLine($"Day11 Part2: {day11answerPart1} in {stopwatch.ElapsedMilliseconds}ms");
