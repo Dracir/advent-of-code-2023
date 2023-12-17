@@ -1,7 +1,7 @@
 using AocUtils;
 
 
-public static class Day12
+public static class Day13
 {
 	public static ulong Part1(string input)
 	{
